@@ -1,4 +1,4 @@
-polkit-dumb-agent
+polkit-dumb-agent-style
 -----------------
 
 polkit is dumb, and never works.
@@ -24,3 +24,13 @@ Requirements
  - C++ compiler
  - Qt5 (dbus and widgets)
  - kdesu
+
+Style additions
+---------------
+
+Note: these style additions are curently WIP and have weird compile settings
+
+ - -h,--help
+   - menu that provides list of available Qt styles
+ - -s,--style
+   - set style
