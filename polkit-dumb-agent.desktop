@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=polkit-dumb-agent
-Comment=Minimalistic polkit authentication agent
-Categories=System;
-Exec=polkit-dumb-agent
