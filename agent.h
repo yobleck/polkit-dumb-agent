@@ -23,6 +23,7 @@
 #include <KDESu/SuProcess>
 #include <QProcess>
 #include <unistd.h>
+#include <QStyleFactory>
 
 class Agent : public QObject
 {
@@ -41,11 +42,12 @@ public slots:
     {
         qDebug() << actionId << message << iconName << details << cookie << identities;
 
-        const QString safeCookie = QProcess::splitCommand(cookie).first(); // in case someone try to be funny
+        const QString safeCookie = QProcess::splitCommand(cookie).first(); // in case someone try to be funny //use QString.split? -luveti
         const QByteArray command = QStringList({ responderPath, safeCookie, QString::number(getuid()) }).join(' ').toLocal8Bit();
 
         for (int num=0; num<3; num++) {
             bool ok;
+            qDebug() << QStyleFactory::keys();
             QString password = QInputDialog::getText(nullptr, "Enter the root password", message + "\n" + actionId, QLineEdit::Password, QString(), &ok);
             if (!ok) {
                 return; // user aborted

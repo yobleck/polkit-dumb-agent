@@ -23,10 +23,38 @@
 #include <QDBusMessage>
 #include <QFileInfo>
 
+//added by yobleck
+#include <QStyleFactory>
+#include <iostream>
+
 
 int main(int argc, char **argv)
 {
+    QString qt_style;
+    if (argc > 1) { //yobleck: simple argument handling
+        if (std::string(argv[1]) == "h" || std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help") { //yobleck: too lazy to make this better
+            std::cout << "Options:" << std::endl;
+            std::cout << "\t-s,--style\t";
+            QStringList valid_styles = QStyleFactory::keys();
+            for (int i=0;i<valid_styles.length();i++) {
+                std::cout << valid_styles[i].toLocal8Bit().constData() << ", ";
+            }
+            std::cout << std::endl;
+            return 1;
+        }
+        if (std::string(argv[1]) == "-s" || std::string(argv[1]) == "--style") {
+            if (argc > 2) {
+                qt_style = QString::fromStdString(argv[2]);
+                std::cout << qt_style.toLocal8Bit().constData() << std::endl;
+            }
+        }
+    }
     QApplication app(argc, argv);
+    if (!qt_style.isNull()) {
+        QApplication::setStyle(qt_style);
+        std::cout << "style set" << std::endl;
+    }
+    
     app.setQuitOnLastWindowClosed(false);
 
     // Details
@@ -46,7 +74,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    QFileInfo responderInfo(LIBEXEC_DIR "polkit-dumb-agent-responder");
+    QFileInfo responderInfo(LIBEXEC_DIR "polkit-dumb-agent-responder-style");
     if (!responderInfo.exists() || !responderInfo.isExecutable()) {
         qWarning() << "responder" << responderInfo.filePath() << "not installed properly, exists:" << responderInfo.exists() << "exec:" << responderInfo.isExecutable();
         return 1;
