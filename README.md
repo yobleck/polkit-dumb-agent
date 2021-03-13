@@ -17,7 +17,7 @@ TODO
 Write a simple replacement for polkit itself, it's a simple dbus API and
 90% of what it provides is never used.
 
-Remove style related testing messages and fix cmake to have sane paths
+fix cmake to have sane paths
 
 
 Requirements
