@@ -25,34 +25,29 @@
 
 //added by yobleck
 #include <QStyleFactory>
-#include <iostream>
 
 
 int main(int argc, char **argv)
 {
+    QApplication app(argc, argv);
+    
+    //yobleck: simple argument handling
+    QStringList qt_args = QCoreApplication::arguments();
     QString qt_style;
-    if (argc > 1) { //yobleck: simple argument handling
-        if (std::string(argv[1]) == "h" || std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help") { //yobleck: too lazy to make this better
-            std::cout << "Options:" << std::endl;
-            std::cout << "\t-s,--style\t";
-            QStringList valid_styles = QStyleFactory::keys();
-            for (int i=0;i<valid_styles.length();i++) {
-                std::cout << valid_styles[i].toLocal8Bit().constData() << ", ";
-            }
-            std::cout << std::endl;
+    if (argc > 1) {
+        if (qt_args[1] == "h" || qt_args[1] == "-h" || qt_args[1] == "--help") { //yobleck: too lazy to make this more robust
+            qInfo() << "Options:\n" << "\t-s,--style\t" << QStyleFactory::keys();
             return 1;
         }
-        if (std::string(argv[1]) == "-s" || std::string(argv[1]) == "--style") {
+        if (qt_args[1] == "-s" || qt_args[1] == "--style") {
             if (argc > 2) {
-                qt_style = QString::fromStdString(argv[2]);
-                std::cout << qt_style.toLocal8Bit().constData() << std::endl;
+                qt_style = qt_args[2];
+                qInfo() << "setting style:" << qt_style;
             }
         }
     }
-    QApplication app(argc, argv);
     if (!qt_style.isNull()) {
         QApplication::setStyle(qt_style);
-        std::cout << "style set" << std::endl;
     }
     
     app.setQuitOnLastWindowClosed(false);
