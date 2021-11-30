@@ -43,7 +43,7 @@ Custom Installation
 
  - download from here (sorry no package repository)
  - cd to folder with files in it
- - run: ccmake $PWD (read up on ccmake if you want more taht basic instructions)
+ - run: ccmake $PWD (read up on ccmake if you want more than basic instructions)
  - once in ccmake hit the c key
  - set the install dir on the second line
  - hit c again to clear asterisk chars
